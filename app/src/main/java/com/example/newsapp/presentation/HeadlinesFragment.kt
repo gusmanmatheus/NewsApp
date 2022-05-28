@@ -35,7 +35,7 @@ class HeadlinesFragment : Fragment() {
     }
 
     private fun headlinesObserver() {
-        viewModel.listHeadlines.observe(viewLifecycleOwner) {
+        viewModel.listHeadlinesLiveData.observe(viewLifecycleOwner) {
             setupRecyclerView(it)
         }
     }
