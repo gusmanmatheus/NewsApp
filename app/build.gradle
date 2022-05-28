@@ -28,12 +28,16 @@ android {
                 localProp.load(new FileInputStream(rootProject.file(fileName)))
             }
 
-            def appKey = localProp["appKey"] ?: ""
+            def appKey = localProp["authToken"] ?: ""
             buildConfigField "String", "API_KEY", "\"${appKey}\""
             buildConfigField "String", "URL_API", "\"https://newsapi.org\""
 
         }
     }
+    buildFeatures {
+        viewBinding true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -58,6 +62,8 @@ dependencies {
     testImplementation "io.insert-koin:koin-test:$koin_version"
     testImplementation "io.insert-koin:koin-test-junit5:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"
+
+    implementation "com.squareup.picasso:picasso:$picasso_version"
 
 
     testImplementation 'junit:junit:4.13.2'

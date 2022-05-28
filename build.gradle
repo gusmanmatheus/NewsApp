@@ -8,6 +8,7 @@ ext {
     retrofitVersion = '2.7.1'
     gsonVersion = '2.8.6'
     koin_version = "3.2.0"
+    picasso_version = '2.71828'
 }
 
 task clean(type: Delete) {
