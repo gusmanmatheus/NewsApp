@@ -59,12 +59,15 @@ dependencies {
     implementation "com.google.code.gson:gson:$gsonVersion"
 
     implementation "io.insert-koin:koin-core:$koin_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation "io.insert-koin:koin-test:$koin_version"
     testImplementation "io.insert-koin:koin-test-junit5:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"
 
     implementation "com.squareup.picasso:picasso:$picasso_version"
 
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

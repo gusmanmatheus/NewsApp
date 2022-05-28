@@ -13,6 +13,11 @@ import java.lang.Exception
 class HeadlinesAdapter : RecyclerView.Adapter<HeadlinesAdapter.HeadlinesViewHolder>() {
     private var headlines = listOf<HeadlinePresentation>()
 
+    fun setDataAdapter(list: List<HeadlinePresentation>) {
+        headlines = list
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeadlinesViewHolder {
         return HeadlinesViewHolder(
             HeadlineItemBinding.inflate(

@@ -14,9 +14,9 @@ class MainViewModel(private val getHeadlineUseCase: GetHeadlineUseCase) : ViewMo
     private val _listHeadlines = MutableLiveData<List<HeadlinePresentation>>()
     val listHeadlines: LiveData<List<HeadlinePresentation>> = _listHeadlines
     private val _errorLivedata = MutableLiveData<String>()
-    private val errorLiveData: LiveData<String> = _errorLivedata
+    val errorLiveData: LiveData<String> = _errorLivedata
     private val _loadingLiveData = MutableLiveData<Boolean>()
-    private val loadingLiveData: LiveData<Boolean> = _loadingLiveData
+    val loadingLiveData: LiveData<Boolean> = _loadingLiveData
     fun getHeadLines() {
         viewModelScope.launch {
             _loadingLiveData.value = true
@@ -28,7 +28,6 @@ class MainViewModel(private val getHeadlineUseCase: GetHeadlineUseCase) : ViewMo
                     _loadingLiveData.postValue(false)
                     _errorLivedata.postValue(it.message)
                 }
-
         }
     }
 }
