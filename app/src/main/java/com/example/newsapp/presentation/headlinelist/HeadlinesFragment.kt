@@ -1,4 +1,4 @@
-package com.example.newsapp.presentation
+package com.example.newsapp.presentation.headlinelist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.databinding.FragmentHeadlinesBinding
 import com.example.newsapp.presentation.adapter.HeadlinesAdapter
 import com.example.newsapp.presentation.model.HeadlinePresentation
+import com.example.newsapp.presentation.ext.safeNavigate
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HeadlinesFragment : Fragment() {
@@ -32,7 +34,9 @@ class HeadlinesFragment : Fragment() {
         headlinesObserver()
         errorObserver()
         loadingObserver()
+        onNextPageObserver()
     }
+
 
     private fun headlinesObserver() {
         viewModel.listHeadlinesLiveData.observe(viewLifecycleOwner) {
@@ -46,6 +50,20 @@ class HeadlinesFragment : Fragment() {
         }
     }
 
+    private fun onNextPageObserver() {
+        viewModel.onNextPage.observe(viewLifecycleOwner) {
+            goToHeadlinesDetails(it)
+        }
+    }
+
+    private fun goToHeadlinesDetails(headLine: HeadlinePresentation) {
+        findNavController().safeNavigate(
+            HeadlinesFragmentDirections.actionHeadlinesFragmentToHeadLineDetailsFragment(
+                headLine
+            )
+        )
+    }
+
     private fun loadingObserver() {
         viewModel.loadingLiveData.observe(viewLifecycleOwner) { isVisible ->
             binding.headlinesPb.visibility = if (isVisible) View.VISIBLE else View.GONE
@@ -56,7 +74,8 @@ class HeadlinesFragment : Fragment() {
         binding.headlinesRv.adapter = adapter
         binding.headlinesRv.layoutManager = LinearLayoutManager(context)
         adapter.setDataAdapter(list)
-
+        adapter.onItemClick = {
+            viewModel.goToNextPage(it)
+        }
     }
-
 }

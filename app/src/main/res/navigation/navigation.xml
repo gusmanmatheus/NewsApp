@@ -7,7 +7,20 @@
 
     <fragment
         android:id="@+id/headlinesFragment"
-        android:name="com.example.newsapp.presentation.HeadlinesFragment"
+        android:name="com.example.newsapp.presentation.headlinelist.HeadlinesFragment"
         android:label="fragment_headlines"
-        tools:layout="@layout/fragment_headlines" />
+        tools:layout="@layout/fragment_headlines">
+        <action
+            android:id="@+id/action_headlinesFragment_to_headLineDetailsFragment"
+            app:destination="@id/headLineDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/headLineDetailsFragment"
+        android:name="com.example.newsapp.presentation.HeadLineDetailsFragment"
+        android:label="fragment_head_line_details"
+        tools:layout="@layout/fragment_head_line_details">
+        <argument
+            android:name="headLine"
+            app:argType="com.example.newsapp.presentation.model.HeadlinePresentation" />
+    </fragment>
 </navigation>

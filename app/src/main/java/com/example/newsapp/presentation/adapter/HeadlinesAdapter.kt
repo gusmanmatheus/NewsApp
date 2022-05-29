@@ -3,8 +3,11 @@ package com.example.newsapp.presentation.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.databinding.HeadlineItemBinding
+import com.example.newsapp.presentation.ext.picassoLoading
 import com.example.newsapp.presentation.model.HeadlinePresentation
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -17,6 +20,8 @@ class HeadlinesAdapter : RecyclerView.Adapter<HeadlinesAdapter.HeadlinesViewHold
         headlines = list
         notifyDataSetChanged()
     }
+
+    var onItemClick: ((HeadlinePresentation) -> Unit) = { }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeadlinesViewHolder {
         return HeadlinesViewHolder(
@@ -36,20 +41,19 @@ class HeadlinesAdapter : RecyclerView.Adapter<HeadlinesAdapter.HeadlinesViewHold
 
     inner class HeadlinesViewHolder(private val binding: HeadlineItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                onItemClick(headlines[adapterPosition])
+            }
+        }
+
         fun bind(headline: HeadlinePresentation) {
             binding.titleHeadlineTv.text = headline.title
             binding.progressBar.visibility = View.VISIBLE
-            Picasso.get().load(headline.urlImage)
-                .into(binding.imgHeadlineIv, object : Callback {
-                    override fun onSuccess() {
-                        binding.progressBar.visibility = View.GONE
-                    }
-                    override fun onError(e: Exception?) {
-                        binding.progressBar.visibility = View.GONE
-                    }
-
-                })
+            Picasso.get()
+                .picassoLoading(headline.urlImage, binding.imgHeadlineIv, binding.progressBar)
         }
     }
 }
+
 

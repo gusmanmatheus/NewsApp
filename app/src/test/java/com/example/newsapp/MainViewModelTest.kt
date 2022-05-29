@@ -3,7 +3,7 @@ package com.example.newsapp
 import androidx.lifecycle.Observer
 import com.example.newsapp.data.api.Response
 import com.example.newsapp.domain.usecases.GetHeadlineUseCase
-import com.example.newsapp.presentation.MainViewModel
+import com.example.newsapp.presentation.headlinelist.MainViewModel
 import com.example.newsapp.presentation.model.HeadlinePresentation
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi

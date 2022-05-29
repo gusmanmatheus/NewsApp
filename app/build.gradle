@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs.kotlin'
+
 }
 
 android {
@@ -79,7 +81,7 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:$core_testing_version"
 
     implementation "com.squareup.picasso:picasso:$picasso_version"
-
+    implementation 'androidx.fragment:fragment-ktx:1.4.1'
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 

@@ -45,7 +45,6 @@ suspend fun <T> requestWrapper(request: suspend () -> T): Response<T> {
     } catch (ioException: IOException) {
         Response.error(Throwable("error Na internet"))
     } catch (e: Exception) {
-        e
         Response.error(Throwable("error desconhecido"))
     }
 }
