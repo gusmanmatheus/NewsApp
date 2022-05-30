@@ -1,4 +1,4 @@
-package com.example.newsapp.presentation
+package com.example.newsapp.presentation.headlinedetails
 
 import android.os.Bundle
 import android.view.LayoutInflater

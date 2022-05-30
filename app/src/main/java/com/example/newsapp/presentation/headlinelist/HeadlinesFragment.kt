@@ -20,12 +20,15 @@ class HeadlinesFragment : Fragment() {
     private lateinit var binding: FragmentHeadlinesBinding
     private val adapter = HeadlinesAdapter()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getHeadLines()
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHeadlinesBinding.inflate(layoutInflater)
-        viewModel.getHeadLines()
         setupObservers()
         return binding.root
     }

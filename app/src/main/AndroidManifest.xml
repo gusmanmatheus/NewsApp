@@ -3,6 +3,7 @@
     package="com.example.newsapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
     <application
         android:name=".AppNews"
         android:allowBackup="true"

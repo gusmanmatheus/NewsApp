@@ -3,8 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/headlinesFragment">
-
+    app:startDestination="@id/authenticatorFragment">
+    <fragment
+        android:id="@+id/authenticatorFragment"
+        android:name="com.example.newsapp.presentation.authenticator.AuthenticatorFragment"
+        android:label="fragment_authenticator"
+        tools:layout="@layout/fragment_authenticator" >
+        <action
+            android:id="@+id/action_authenticatorFragment_to_headlinesFragment"
+            app:destination="@id/headlinesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/headlinesFragment"
         android:name="com.example.newsapp.presentation.headlinelist.HeadlinesFragment"
@@ -16,11 +24,12 @@
     </fragment>
     <fragment
         android:id="@+id/headLineDetailsFragment"
-        android:name="com.example.newsapp.presentation.HeadLineDetailsFragment"
+        android:name="com.example.newsapp.presentation.headlinedetails.HeadLineDetailsFragment"
         android:label="fragment_head_line_details"
         tools:layout="@layout/fragment_head_line_details">
         <argument
             android:name="headLine"
             app:argType="com.example.newsapp.presentation.model.HeadlinePresentation" />
     </fragment>
+
 </navigation>

@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">NewsApp</string>
+    <string name="auth_title">Biometric Authentication</string>
+    <string name="auth_subtitle">Login using fingerprint</string>
+    <string name="auth_negative_button_text">cancel</string>
+    <string name="auth_sucess_message">enabled with success</string>
+    <string name="auth_failed_message">finger failed</string>
+    <string name="auth_error_message">error</string>
+    <string name="auth_cancel_message">canceled Authentication</string>
+    <string name="auth_authentication_unable">Finger authentication permission is not enable</string>
+    <string name="auth_authentication_unable_settings">Fingerprint authentication has not been enable in setting</string>
+    <string name="auth_canceled_byuser">Authentication was cancelled by the user</string>
 </resources>
