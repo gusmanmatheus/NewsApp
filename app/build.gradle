@@ -36,6 +36,15 @@ android {
 
         }
     }
+    flavorDimensions "default"
+    productFlavors {
+        firstSources {
+            buildConfigField("String", "SOURCES", "\"bbc-news\"")
+        }
+        secoundSources {
+            buildConfigField("String", "SOURCES", "\"abc-news\"")
+        }
+    }
     testOptions {
         unitTests {
             all {

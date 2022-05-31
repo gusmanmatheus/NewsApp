@@ -26,6 +26,7 @@ class AuthenticatorFragment : Fragment() {
         CancellationSignal()
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
