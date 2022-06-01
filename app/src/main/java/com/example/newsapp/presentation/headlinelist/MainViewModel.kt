@@ -21,8 +21,8 @@ class MainViewModel(private val getHeadlineUseCase: GetHeadlineUseCase) : ViewMo
     val onNextPage: LiveData<HeadlinePresentation> get() = _onNextPage
 
     fun getHeadLines() {
-        _loadingLiveData.value = true
         viewModelScope.launch {
+            _loadingLiveData.postValue(true)
             getHeadlineUseCase.invoke().onSuccess {
                 _loadingLiveData.postValue(false)
                 _listHeadlinesLiveData.postValue(it.toPresentation())
