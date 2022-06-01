@@ -45,24 +45,27 @@ class AuthenticatorFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun checkBiometricSupport(): Boolean {
-        val keyguardManager: KeyguardManager =
-            requireContext().getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        context?.let { context ->
+            val keyguardManager: KeyguardManager =
+                context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
 
-        if (!keyguardManager.isKeyguardSecure) {
-            notifyUser(getString(R.string.auth_authentication_unable_settings))
-            return false
+            if (!keyguardManager.isKeyguardSecure) {
+                notifyUser(getString(R.string.auth_authentication_unable_settings))
+                return false
+            }
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    android.Manifest.permission.USE_BIOMETRIC
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                notifyUser(getString(R.string.auth_authentication_unable))
+                return false
+            }
+            return activity?.packageManager?.hasSystemFeature(
+                PackageManager.FEATURE_FINGERPRINT
+            ) == true
         }
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                android.Manifest.permission.USE_BIOMETRIC
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            notifyUser(getString(R.string.auth_authentication_unable))
-            return false
-        }
-        return activity?.packageManager?.hasSystemFeature(
-            PackageManager.FEATURE_FINGERPRINT
-        ) == true
+        return false
     }
 
     private fun notifyUser(message: String) {
@@ -75,19 +78,21 @@ class AuthenticatorFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun tryAuthenticate() {
-        val executor = ContextCompat.getMainExecutor(requireContext())
-        if (checkBiometricSupport() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            val biometricPrompt = BiometricPrompt.Builder(requireContext())
-            val authPrompt =
-                biometricPrompt.setTitle(getString(R.string.auth_title))
-                    .setSubtitle(getString(R.string.auth_subtitle)).setNegativeButton(
-                        getString(R.string.auth_negative_button_text),
-                        executor
-                    ) { _, _ -> notifyUser(getString(R.string.auth_cancel_message)) }
-                    .build()
-            authPrompt.authenticate(getCancellationSignal(), executor, authCallback)
-        } else {
-            goToHeadlinesPage()
+        context?.let { context ->
+            val executor = ContextCompat.getMainExecutor(context)
+            if (checkBiometricSupport() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                val biometricPrompt = BiometricPrompt.Builder(context)
+                val authPrompt =
+                    biometricPrompt.setTitle(getString(R.string.auth_title))
+                        .setSubtitle(getString(R.string.auth_subtitle)).setNegativeButton(
+                            getString(R.string.auth_negative_button_text),
+                            executor
+                        ) { _, _ -> notifyUser(getString(R.string.auth_cancel_message)) }
+                        .build()
+                authPrompt.authenticate(getCancellationSignal(), executor, authCallback)
+            } else {
+                goToHeadlinesPage()
+            }
         }
     }
 
@@ -96,19 +101,12 @@ class AuthenticatorFragment : Fragment() {
             @RequiresApi(Build.VERSION_CODES.P)
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    notifyUser(getString(R.string.auth_sucess_message))
                     goToHeadlinesPage()
                     super.onAuthenticationSucceeded(result)
                 }
 
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    notifyUser(getString(R.string.auth_failed_message))
-                }
-
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
-                    notifyUser(getString(R.string.auth_error_message))
                 }
             }
 
